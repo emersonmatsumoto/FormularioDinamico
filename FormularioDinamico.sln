@@ -5,6 +5,10 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormularioDinamico.Domain", "FormularioDinamico.Domain\FormularioDinamico.Domain.csproj", "{FF8A889F-7852-48CB-B1B9-BA72F769A88B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormularioDinamico.Application", "FormularioDinamico.Application\FormularioDinamico.Application.csproj", "{A34114C5-2F56-44C3-944D-E05E593000C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormularioDinamico.Application.Test", "FormularioDinamico.Application.Test\FormularioDinamico.Application.Test.csproj", "{3AA00910-3869-4C91-8DAA-209761B9A14B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{FF8A889F-7852-48CB-B1B9-BA72F769A88B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF8A889F-7852-48CB-B1B9-BA72F769A88B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF8A889F-7852-48CB-B1B9-BA72F769A88B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A34114C5-2F56-44C3-944D-E05E593000C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A34114C5-2F56-44C3-944D-E05E593000C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A34114C5-2F56-44C3-944D-E05E593000C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A34114C5-2F56-44C3-944D-E05E593000C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AA00910-3869-4C91-8DAA-209761B9A14B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AA00910-3869-4C91-8DAA-209761B9A14B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AA00910-3869-4C91-8DAA-209761B9A14B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AA00910-3869-4C91-8DAA-209761B9A14B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
