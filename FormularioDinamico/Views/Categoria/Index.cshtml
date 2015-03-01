@@ -1,39 +1,58 @@
 ﻿@model IEnumerable<FormularioDinamico.Domain.Categoria>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Categorias e Sub-categorias";
 }
 
-<h2>Index</h2>
+<h2>Categorias e Sub-categorias</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Nova Categoria", "Create", null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
-        <th>
+        <th colspan="2">
             @Html.DisplayNameFor(model => model.Descricao)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Slug)
         </th>
-        <th></th>
+        <th>
+            @("Ação")
+        </th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
+        <td colspan="2">
+            @Html.ActionLink(item.Descricao, "Details", new { id = item.Id })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Slug)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            <a href="@Url.Action("Create", "SubCategoria", new { categoriaId=item.Id })" class="btn btn-success" style="padding: 3px 6px"><span class="glyphicon glyphicon-plus"></span></a>
+            <a href="@Url.Action("Edit", new { id=item.Id })" class="btn btn-primary" style="padding: 3px 6px"><span class="glyphicon glyphicon-pencil"></span></a>
+            <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger" style="padding: 3px 6px"><span class="glyphicon glyphicon-trash"></span></a>
         </td>
     </tr>
+    foreach (var sub in item.SubCategorias)
+    {
+        <tr>
+            <td>
+            </td>
+            <td>
+                @Html.ActionLink(sub.Descricao, "Details", "SubCategoria", new { id = sub.Id }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => sub.Slug)
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", "SubCategoria", new { id = sub.Id })" class="btn btn-primary" style="padding: 3px 6px"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="@Url.Action("Delete", "SubCategoria", new { id = sub.Id })" class="btn btn-danger" style="padding: 3px 6px"><span class="glyphicon glyphicon-trash"></span></a>
+            </td>
+        </tr>
+    }
 }
 
 </table>

@@ -16,13 +16,6 @@ namespace FormularioDinamico.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: SubCategoria
-        public async Task<ActionResult> Index()
-        {
-            var subCategorias = db.SubCategorias.Include(s => s.Categoria);
-            return View(await subCategorias.ToListAsync());
-        }
-
         // GET: SubCategoria/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -39,9 +32,9 @@ namespace FormularioDinamico.Controllers
         }
 
         // GET: SubCategoria/Create
-        public ActionResult Create()
+        public ActionResult Create(int categoriaId)
         {
-            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao");
+            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", categoriaId);
             return View();
         }
 
@@ -56,7 +49,7 @@ namespace FormularioDinamico.Controllers
             {
                 db.SubCategorias.Add(subCategoria);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Categoria", null);
             }
 
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoria.CategoriaId);
@@ -90,7 +83,7 @@ namespace FormularioDinamico.Controllers
             {
                 db.Entry(subCategoria).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Categoria", null);
             }
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoria.CategoriaId);
             return View(subCategoria);
@@ -119,7 +112,7 @@ namespace FormularioDinamico.Controllers
             SubCategoria subCategoria = await db.SubCategorias.FindAsync(id);
             db.SubCategorias.Remove(subCategoria);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Categoria", null);
         }
 
         protected override void Dispose(bool disposing)
