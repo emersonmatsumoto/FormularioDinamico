@@ -3,6 +3,7 @@ namespace FormularioDinamico.Domain
 {
     public class SubCategoria
     {
+        public virtual Categoria Categoria { get; set; }
         public int CategoriaId { get; set; }
         public int Id { get; set; }
         public string Descricao { get; set; }

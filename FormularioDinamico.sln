@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormularioDinamico.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormularioDinamico.Application.Test", "FormularioDinamico.Application.Test\FormularioDinamico.Application.Test.csproj", "{3AA00910-3869-4C91-8DAA-209761B9A14B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormularioDinamico", "FormularioDinamico\FormularioDinamico.csproj", "{7C3B380C-7545-4F21-BAFE-32582C12F0D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3AA00910-3869-4C91-8DAA-209761B9A14B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AA00910-3869-4C91-8DAA-209761B9A14B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AA00910-3869-4C91-8DAA-209761B9A14B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C3B380C-7545-4F21-BAFE-32582C12F0D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C3B380C-7545-4F21-BAFE-32582C12F0D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C3B380C-7545-4F21-BAFE-32582C12F0D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C3B380C-7545-4F21-BAFE-32582C12F0D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

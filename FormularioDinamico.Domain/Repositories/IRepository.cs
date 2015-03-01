@@ -13,6 +13,6 @@ namespace FormularioDinamico.Domain.Repositories
         Task SaveAsync();
         IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
         IQueryable<T> GetAll();
-        T GetById(int id);
+        Task<T> GetByIdAsync(int id);
     }
 }
