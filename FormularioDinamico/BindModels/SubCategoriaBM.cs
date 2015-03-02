@@ -15,6 +15,7 @@ namespace FormularioDinamico.BindModels
         [StringLength(60, ErrorMessage = "Slug não deve ultrapassar {0} caracteres")]
         [Display(Name = "Slug")]
         public string Slug { get; set; }
+
         public virtual ICollection<CampoBM> Campos { get; set; }
     }
 }

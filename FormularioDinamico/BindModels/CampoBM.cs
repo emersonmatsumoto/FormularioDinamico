@@ -15,6 +15,7 @@ namespace FormularioDinamico.BindModels
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
         public TipoCampo Tipo { get; set; }
-        public ICollection<ItemBM> Lista { get; set; }
+
+        public string Lista { get; set; }
     }
 }

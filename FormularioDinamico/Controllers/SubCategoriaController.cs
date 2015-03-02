@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using FormularioDinamico.Domain;
 using FormularioDinamico.Models;
+using FormularioDinamico.BindModels;
+using System.Web.Script.Serialization;
 
 namespace FormularioDinamico.Controllers
 {
@@ -35,7 +37,10 @@ namespace FormularioDinamico.Controllers
         public ActionResult Create(int categoriaId)
         {
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", categoriaId);
-            return View();
+            var model = new SubCategoriaBM() { 
+                Campos = new List<CampoBM>()
+            };
+            return View(model);
         }
 
         // POST: SubCategoria/Create
@@ -43,12 +48,12 @@ namespace FormularioDinamico.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,CategoriaId,Descricao,Slug")] SubCategoria subCategoria)
+        public async Task<ActionResult> Create(SubCategoriaBM subCategoria)
         {
             if (ModelState.IsValid)
             {
-                db.SubCategorias.Add(subCategoria);
-                await db.SaveChangesAsync();
+                //db.SubCategorias.Add(subCategoria);
+                //await db.SaveChangesAsync();
                 return RedirectToAction("Index", "Categoria", null);
             }
 
