@@ -35,9 +35,9 @@ namespace FormularioDinamico.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             modelBuilder.Entity<Categoria>().Property(e => e.Slug).HasMaxLength(60).IsRequired();
-            modelBuilder.Entity<Categoria>().Property(e => e.Descricao).HasMaxLength(160).IsRequired();
+            modelBuilder.Entity<Categoria>().Property(e => e.Descricao).HasMaxLength(60).IsRequired();
             modelBuilder.Entity<SubCategoria>().Property(e => e.Slug).HasMaxLength(60).IsRequired();
-            modelBuilder.Entity<SubCategoria>().Property(e => e.Descricao).HasMaxLength(160).IsRequired();
+            modelBuilder.Entity<SubCategoria>().Property(e => e.Descricao).HasMaxLength(60).IsRequired();
             modelBuilder.Entity<Campo>().Property(e => e.Descricao).HasMaxLength(60).IsRequired();
             modelBuilder.Entity<Item>().Property(e => e.Texto).HasMaxLength(60).IsRequired();
 

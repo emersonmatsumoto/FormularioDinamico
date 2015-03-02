@@ -12,7 +12,7 @@ namespace FormularioDinamico.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Descricao = c.String(nullable: false, maxLength: 160),
+                        Descricao = c.String(nullable: false, maxLength: 60),
                         Slug = c.String(nullable: false, maxLength: 60),
                     })
                 .PrimaryKey(t => t.Id);
@@ -23,7 +23,7 @@ namespace FormularioDinamico.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         CategoriaId = c.Int(nullable: false),
-                        Descricao = c.String(nullable: false, maxLength: 160),
+                        Descricao = c.String(nullable: false, maxLength: 60),
                         Slug = c.String(nullable: false, maxLength: 60),
                     })
                 .PrimaryKey(t => t.Id)
