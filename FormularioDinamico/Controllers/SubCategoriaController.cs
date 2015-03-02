@@ -11,6 +11,7 @@ using FormularioDinamico.Domain;
 using FormularioDinamico.Models;
 using FormularioDinamico.BindModels;
 using System.Web.Script.Serialization;
+using AutoMapper;
 
 namespace FormularioDinamico.Controllers
 {
@@ -48,17 +49,18 @@ namespace FormularioDinamico.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(SubCategoriaBM subCategoria)
+        public async Task<ActionResult> Create(SubCategoriaBM subCategoriaBM)
         {
             if (ModelState.IsValid)
             {
-                //db.SubCategorias.Add(subCategoria);
-                //await db.SaveChangesAsync();
+                SubCategoria subCategoria = Mapper.Map<SubCategoria>(subCategoriaBM);
+                db.SubCategorias.Add(subCategoria);
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index", "Categoria", null);
             }
 
-            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoria.CategoriaId);
-            return View(subCategoria);
+            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoriaBM.CategoriaId);
+            return View(subCategoriaBM);
         }
 
         // GET: SubCategoria/Edit/5

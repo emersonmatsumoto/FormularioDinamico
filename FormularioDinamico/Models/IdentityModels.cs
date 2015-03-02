@@ -39,7 +39,6 @@ namespace FormularioDinamico.Models
             modelBuilder.Entity<SubCategoria>().Property(e => e.Slug).HasMaxLength(60).IsRequired();
             modelBuilder.Entity<SubCategoria>().Property(e => e.Descricao).HasMaxLength(60).IsRequired();
             modelBuilder.Entity<Campo>().Property(e => e.Descricao).HasMaxLength(60).IsRequired();
-            modelBuilder.Entity<Item>().Property(e => e.Texto).HasMaxLength(60).IsRequired();
 
             base.OnModelCreating(modelBuilder);
         }

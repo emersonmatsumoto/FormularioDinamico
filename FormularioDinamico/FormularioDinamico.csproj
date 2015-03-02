@@ -167,7 +167,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="BindModels\CampoBM.cs" />
     <Compile Include="BindModels\CategoriaBM.cs" />
-    <Compile Include="BindModels\ItemBM.cs" />
     <Compile Include="BindModels\SubCategoriaBM.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
@@ -180,6 +179,10 @@
     <Compile Include="Migrations\201503010203169_Initial.cs" />
     <Compile Include="Migrations\201503010203169_Initial.Designer.cs">
       <DependentUpon>201503010203169_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503022346558_RemovidoItem.cs" />
+    <Compile Include="Migrations\201503022346558_RemovidoItem.Designer.cs">
+      <DependentUpon>201503022346558_RemovidoItem.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -278,6 +281,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201503010203169_Initial.resx">
       <DependentUpon>201503010203169_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503022346558_RemovidoItem.resx">
+      <DependentUpon>201503022346558_RemovidoItem.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

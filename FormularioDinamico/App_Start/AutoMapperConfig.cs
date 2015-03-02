@@ -14,8 +14,7 @@ namespace FormularioDinamico.App_Start
         {
             Mapper.CreateMap<Categoria, CategoriaBM>();
             Mapper.CreateMap<SubCategoria, SubCategoriaBM>();
-            Mapper.CreateMap<Campo, CampoBM>();
-            Mapper.CreateMap<Item, ItemBM>();            
+            Mapper.CreateMap<Campo, CampoBM>();      
         }
  
     }
