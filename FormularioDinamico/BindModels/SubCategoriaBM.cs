@@ -4,7 +4,6 @@ namespace FormularioDinamico.BindModels
 {
     public class SubCategoriaBM
     {
-        public virtual CategoriaBM Categoria { get; set; }
         public int CategoriaId { get; set; }
         public int Id { get; set; }
 

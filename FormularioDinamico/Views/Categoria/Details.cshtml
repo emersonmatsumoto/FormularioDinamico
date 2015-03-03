@@ -1,29 +1,19 @@
 ﻿@model FormularioDinamico.Domain.Categoria
 
 @{
-    ViewBag.Title = "Categoria";
+    ViewBag.Title = Model.Descricao;
 }
 
-<h2>Categoria</h2>
+<h2>@Model.Descricao</h2>
 
 <div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Slug)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Slug)
-        </dd>
-
+    <dl>
+        @foreach(var sub in Model.SubCategorias)
+        { 
+            <dt>
+                @Html.ActionLink(sub.Descricao, "Details", "SubCategoria", new { id = sub.Id}, null)
+            </dt>
+        }
     </dl>
 </div>

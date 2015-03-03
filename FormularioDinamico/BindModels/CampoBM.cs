@@ -6,8 +6,6 @@ namespace FormularioDinamico.BindModels
 {
     public class CampoBM
     {
-        public virtual SubCategoriaBM SubCategoria { get; set; }
-        public int SubCategoriaId { get; set; }
         public int Id { get; set; }
         public int Ordem { get; set; }
 

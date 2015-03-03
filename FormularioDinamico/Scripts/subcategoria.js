@@ -1,24 +1,38 @@
 ﻿$(function () {
+    $("#accordion")
+       .accordion({
+           header: "> div > h3"
+       })
+       .sortable({
+           axis: "y",
+           handle: "h3",
+           stop: function (event, ui) {
+               // IE doesn't register the blur when sorting
+               // so trigger focusout handlers to remove .ui-state-focus
+               ui.item.children("h3").triggerHandler("focusout");
 
+               // Refresh accordion to handle new order
+               $(this).accordion("refresh");
+           },
+           stop: function () {
+               var inputs = $('input.currentposition');
+               $('input.currentposition').each(function (idx) {
+                   $(this).val(idx);
+               });
+           }
+       });
+    
+    var campos = JSON.parse($("#CamposJSON").val());
+    $(campos).each(function (i, e) {
+        render(e);
+    });
 
     $("#addField").click(function () { addField(); });
 
     function addField() {
-        var campo = {Descricao:"", Tipo:0, Lista: ""};
+        var campo = { Descricao: "", Tipo: 0, Lista: "", Ordem: $("#accordion").children().size() + 1};
         render(campo);
     }
-
-    $("form").submit(function () {
-        var campos = [];
-        var i = 0;
-        $("#accordion").children(".group").each(function (i, e) {
-            var data = $(e).data();
-            data.Ordem = i;
-            i++;
-            campos.push(data);
-        });
-        $("#CamposJSON").val(JSON.stringify(campos));
-    });
 
     function render(campo)
     {
@@ -28,8 +42,7 @@
         var $title = $("<h3 />");
         var $titleSpan = $("<span />");
         var $inputs = $("<div />");
-        var $inputOrdem = $("<input type='hidden' class='currentposition' id='Campos_" + index + "__Ordem' name='Campos[" + index + "].Ordem' value='" + index + "' />");
-
+        var $inputOrdem = $("<input type='hidden' class='currentposition' id='Campos_" + index + "__Ordem' name='Campos[" + index + "].Ordem' />");
 
         var $formGroupDesc = $("<div class='form-group' />");
         var $labelDesc = $("<label />");
@@ -65,6 +78,13 @@
         $labelTipo.append("Tipo");
         $labelLista.append("Lista");
 
+        $inputOrdem.val(campo.Ordem);
+        $inputDesc.val(campo.Descricao);
+        $selectTipo.val(campo.Tipo);
+        $inputLista.val(campo.Lista);
+        if (campo.Descricao != "")
+            $titleSpan.text(campo.Descricao);
+
         $inputDesc.attr("placeholder", "Campo");
         $inputDesc.change(function () { var v = $(this).val(); $titleSpan.text(v); $group.data().Descricao = v; });
 
@@ -94,28 +114,6 @@
         $("#accordion").accordion({ active: "#accordion h3:last-child div" }).accordion("refresh");
     }
 
-    $("#accordion")
-        .accordion({
-            header: "> div > h3"
-        })
-        .sortable({
-            axis: "y",
-            handle: "h3",
-            stop: function (event, ui) {
-                // IE doesn't register the blur when sorting
-                // so trigger focusout handlers to remove .ui-state-focus
-                ui.item.children("h3").triggerHandler("focusout");
-
-                // Refresh accordion to handle new order
-                $(this).accordion("refresh");
-            },
-            stop: function () {
-                var inputs = $('input.currentposition');
-                var nbElems = inputs.length;
-                $('input.currentposition').each(function (idx) {
-                    $(this).val(nbElems - idx);
-                });
-            }
-        });
+   
 
 });

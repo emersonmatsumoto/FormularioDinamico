@@ -76,7 +76,8 @@ namespace FormularioDinamico.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoria.CategoriaId);
-            return View(subCategoria);
+            var subCategoriaBM = Mapper.Map<SubCategoriaBM>(subCategoria);
+            return View(subCategoriaBM);
         }
 
         // POST: SubCategoria/Edit/5
@@ -84,16 +85,19 @@ namespace FormularioDinamico.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,CategoriaId,Descricao,Slug")] SubCategoria subCategoria)
+        public async Task<ActionResult> Edit(SubCategoriaBM subCategoriaBM)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(subCategoria).State = EntityState.Modified;
+                SubCategoria subCategoria = Mapper.Map<SubCategoria>(subCategoriaBM);
+                var oldEntity = db.SubCategorias.Single(s => s.Id == subCategoria.Id);
+                db.Entry(oldEntity).State = EntityState.Deleted;
+                db.Entry(subCategoria).State = EntityState.Added;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index", "Categoria", null);
             }
-            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoria.CategoriaId);
-            return View(subCategoria);
+            ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoriaBM.CategoriaId);
+            return View(subCategoriaBM);
         }
 
         // GET: SubCategoria/Delete/5

@@ -1,39 +1,54 @@
 ﻿@model FormularioDinamico.Domain.SubCategoria
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Descricao;
 }
 
-<h2>Details</h2>
+<h2>@Model.Descricao</h2>
 
 <div>
-    <h4>SubCategoria</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Categoria.Descricao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Categoria.Descricao)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Slug)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Slug)
-        </dd>
-
-    </dl>
+    @foreach(var campo in Model.Campos.OrderBy(o => o.Ordem))
+    {
+        <div class="form-group">
+            <label>@campo.Descricao</label>
+            @if (campo.Tipo == FormularioDinamico.Domain.TipoCampo.checkbox)
+            {
+                foreach (var val in campo.Lista.Split(','))
+                {
+                    <label>
+                        <input type="checkbox"> @val
+                    </label>
+                }
+            }
+            else if (campo.Tipo == FormularioDinamico.Domain.TipoCampo.select)
+            {
+                <select class="form-control">
+                    @foreach (var val in campo.Lista.Split(','))
+                    {
+                        <option>@val</option>   
+                    }
+                </select>
+            }
+            else if (campo.Tipo == FormularioDinamico.Domain.TipoCampo.radio)
+            {                
+                foreach (var val in campo.Lista.Split(','))
+                {
+                    <label>
+                        <input type="radio" name="@campo.Descricao">
+                        @val
+                    </label>
+                }
+            }
+            else if (campo.Tipo == FormularioDinamico.Domain.TipoCampo.text)
+            {
+                <input class="form-control" />
+            }
+            else if (campo.Tipo == FormularioDinamico.Domain.TipoCampo.textarea)
+            {
+                <textarea class="form-control"></textarea>
+            }
+        </div>
+    }
 </div>
 

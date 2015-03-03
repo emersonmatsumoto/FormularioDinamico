@@ -39,7 +39,7 @@
             </div>
         </div>
 
-        @Html.Hidden("CamposJSON", Json.Encode(Model.Campos))
+        @Html.Hidden("CamposJSON", Json.Encode(Model.Campos.OrderBy(o => o.Ordem)))
         
         <div class="form-group">
             <button class="btn btn-primary" onclick="return false;" id="addField">Adicionar campo</button>
