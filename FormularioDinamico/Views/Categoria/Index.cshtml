@@ -25,7 +25,7 @@
 @foreach (var item in Model) {
     <tr>
         <td colspan="2">
-            @Html.ActionLink(item.Descricao, "Details", new { id = item.Id })
+            @Html.ActionLink(item.Descricao, "Details", new { slug = item.Slug })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Slug)
@@ -42,7 +42,7 @@
             <td>
             </td>
             <td>
-                @Html.ActionLink(sub.Descricao, "Details", "SubCategoria", new { id = sub.Id }, null)
+                @Html.ActionLink(sub.Descricao, "Details", "SubCategoria", new { slug = item.Slug, subslug = sub.Slug }, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => sub.Slug)

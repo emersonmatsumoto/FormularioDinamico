@@ -12,6 +12,7 @@ using FormularioDinamico.Models;
 
 namespace FormularioDinamico.Controllers
 {
+    [Authorize(Roles="Admin")]
     public class CategoriaController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -23,13 +24,11 @@ namespace FormularioDinamico.Controllers
         }
 
         // GET: Categoria/Details/5
-        public async Task<ActionResult> Details(int? id)
+        [AllowAnonymous]
+        public async Task<ActionResult> Details(string slug)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Categoria categoria = await db.Categorias.FindAsync(id);
+          
+            Categoria categoria = await db.Categorias.FirstOrDefaultAsync(f => f.Slug == slug);
             if (categoria == null)
             {
                 return HttpNotFound();

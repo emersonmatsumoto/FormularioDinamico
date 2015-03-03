@@ -15,18 +15,16 @@ using AutoMapper;
 
 namespace FormularioDinamico.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SubCategoriaController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: SubCategoria/Details/5
-        public async Task<ActionResult> Details(int? id)
+        [AllowAnonymous]
+        public async Task<ActionResult> Details(string slug, string subslug)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            SubCategoria subCategoria = await db.SubCategorias.FindAsync(id);
+            SubCategoria subCategoria = await db.SubCategorias.FirstOrDefaultAsync(f => f.Slug == subslug && f.Categoria.Slug == slug);
             if (subCategoria == null)
             {
                 return HttpNotFound();
