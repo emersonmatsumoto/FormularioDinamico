@@ -10,6 +10,7 @@ namespace FormularioDinamico.BindModels
         public int Ordem { get; set; }
 
         [StringLength(60, ErrorMessage = "Descrição não deve ultrapassar {0} caracteres")]
+        [Required(ErrorMessage = "Descrição é obrigatória")]
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
         public TipoCampo Tipo { get; set; }

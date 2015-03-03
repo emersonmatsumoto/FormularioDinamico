@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using FormularioDinamico.Domain;
 using FormularioDinamico.Models;
+using FormularioDinamico.BindModels;
+using AutoMapper;
 
 namespace FormularioDinamico.Controllers
 {
@@ -47,16 +49,17 @@ namespace FormularioDinamico.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Descricao,Slug")] Categoria categoria)
+        public async Task<ActionResult> Create(CategoriaBM categoriaBM)
         {
             if (ModelState.IsValid)
             {
+                var categoria = Mapper.Map<Categoria>(categoriaBM);
                 db.Categorias.Add(categoria);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(categoria);
+            return View(categoriaBM);
         }
 
         // GET: Categoria/Edit/5
@@ -71,7 +74,9 @@ namespace FormularioDinamico.Controllers
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+
+            var categoriaBM = Mapper.Map<CategoriaBM>(categoria);
+            return View(categoriaBM);
         }
 
         // POST: Categoria/Edit/5
@@ -79,15 +84,16 @@ namespace FormularioDinamico.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Descricao,Slug")] Categoria categoria)
+        public async Task<ActionResult> Edit(CategoriaBM categoriaBM)
         {
             if (ModelState.IsValid)
             {
+                var categoria = Mapper.Map<Categoria>(categoriaBM);
                 db.Entry(categoria).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(categoria);
+            return View(categoriaBM);
         }
 
         // GET: Categoria/Delete/5
@@ -102,7 +108,8 @@ namespace FormularioDinamico.Controllers
             {
                 return HttpNotFound();
             }
-            return View(categoria);
+            var categoriaBM = Mapper.Map<CategoriaBM>(categoria);
+            return View(categoriaBM);
         }
 
         // POST: Categoria/Delete/5
