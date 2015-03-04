@@ -19,7 +19,7 @@ namespace FormularioDinamico.Application.Test
             var entity = new Categoria();
             var repository = new Mock<ICategoriaRepository>();
             repository
-                .Setup(s => s.Insert(It.IsAny<Categoria>()))
+                .Setup(s => s.Add(It.IsAny<Categoria>()))
                 .Verifiable();
             
             repository
@@ -31,7 +31,7 @@ namespace FormularioDinamico.Application.Test
                         
             Notification note = await testClass.Executar(entity);
 
-            repository.Verify(v => v.Insert(entity));
+            repository.Verify(v => v.Add(entity));
             repository.Verify(v => v.SaveAsync());
 
             Assert.AreEqual(false, note.HasErrors);
@@ -43,7 +43,7 @@ namespace FormularioDinamico.Application.Test
             var entity = new Categoria();
             var repository = new Mock<ICategoriaRepository>();
             repository
-                .Setup(s => s.Insert(It.IsAny<Categoria>()))
+                .Setup(s => s.Add(It.IsAny<Categoria>()))
                 .Verifiable();
 
             repository
@@ -52,14 +52,14 @@ namespace FormularioDinamico.Application.Test
                 .Verifiable();
 
             repository
-                .Setup(s => s.SearchFor(It.IsAny<Expression<Func<Categoria, bool>>>()))
+                .Setup(s => s.FindBy(It.IsAny<Expression<Func<Categoria, bool>>>()))
                 .Returns(new List<Categoria>{ new Categoria() }.AsQueryable());
 
             InserirCategoria testClass = new InserirCategoria(repository.Object);
 
             Notification note = await testClass.Executar(entity);
 
-            repository.Verify(v => v.Insert(entity));
+            repository.Verify(v => v.Add(entity));
             repository.Verify(v => v.SaveAsync());
 
             Assert.AreEqual(true, note.HasErrors);

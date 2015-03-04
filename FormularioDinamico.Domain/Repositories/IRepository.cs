@@ -7,12 +7,12 @@ namespace FormularioDinamico.Domain.Repositories
 {
     public interface IRepository<T>
     {
-        void Insert(T entity);
-        void Update(T entity);
+        void Add(T entity);
+        void Edit(T entity);
         void Delete(T entity);
+        void Save();
         Task SaveAsync();
-        IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
+        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
         IQueryable<T> GetAll();
-        Task<T> GetByIdAsync(int id);
     }
 }

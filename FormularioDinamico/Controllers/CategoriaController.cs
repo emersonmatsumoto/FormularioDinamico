@@ -21,6 +21,10 @@ namespace FormularioDinamico.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private IInserirCategoria _inserirCategoria;
 
+        public CategoriaController()
+        {
+
+        }
 
         public CategoriaController(IInserirCategoria inserirCategoria)
         {
@@ -62,9 +66,14 @@ namespace FormularioDinamico.Controllers
             {
                 var categoria = Mapper.Map<Categoria>(categoriaBM);
 
-                await _inserirCategoria.Executar(categoria);
+                Notification notification = await _inserirCategoria.Executar(categoria);
 
-                return RedirectToAction("Index");
+                if (notification.HasErrors == false)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("", String.Join(", ", notification.Errors));
             }
 
             return View(categoriaBM);

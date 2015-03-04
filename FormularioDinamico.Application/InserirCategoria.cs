@@ -22,7 +22,12 @@ namespace FormularioDinamico.Application
 
             Validate(entity);
 
-            _repository.Insert(entity);
+            if (_notification.HasErrors == true)
+            {
+                return _notification;
+            }
+
+            _repository.Add(entity);
 
             try
             {
@@ -38,7 +43,7 @@ namespace FormularioDinamico.Application
 
         private void Validate(Categoria entity)
         {
-            int exist = _repository.SearchFor(f => f.Slug == entity.Slug && f.Id != entity.Id).Count();
+            int exist = _repository.FindBy(f => f.Slug == entity.Slug).Count();
             Fail(exist > 0, "Já existe outra categoria com o mesmo slug");
         }
 
