@@ -12,7 +12,7 @@
         @foreach(var sub in Model.SubCategorias)
         { 
             <dt>
-                @Html.ActionLink(sub.Descricao, "Details", "SubCategoria", new { slug = Model.Slug, subslug = sub.Slug }, null)
+                @Html.RouteLink(sub.Descricao, "SubCategoria", new { slug = Model.Slug, subslug = sub.Slug })
             </dt>
         }
     </dl>

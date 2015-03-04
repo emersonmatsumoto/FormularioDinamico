@@ -10,7 +10,7 @@
         @foreach (var cat in Model)
         {
             <dt>
-                @Html.ActionLink(cat.Descricao, "Details", "Categoria", new { slug = cat.Slug }, null)
+                @Html.RouteLink(cat.Descricao, "Categoria", new { slug = cat.Slug })
             </dt>
         }
     </dl>
