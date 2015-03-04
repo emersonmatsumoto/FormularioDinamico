@@ -4,6 +4,10 @@ namespace FormularioDinamico.BindModels
 {
     public class SubCategoriaBM
     {
+        public SubCategoriaBM()
+        {
+            Campos = new List<CampoBM>();
+        }
         public int CategoriaId { get; set; }
         public int Id { get; set; }
 

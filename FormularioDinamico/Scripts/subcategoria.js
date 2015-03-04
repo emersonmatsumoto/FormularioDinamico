@@ -32,6 +32,7 @@
     function addField() {
         var campo = { Descricao: "", Tipo: 0, Lista: "", Ordem: $("#accordion").children().size() + 1};
         render(campo);
+
     }
 
     function render(campo)
@@ -47,6 +48,7 @@
         var $formGroupDesc = $("<div class='form-group' />");
         var $labelDesc = $("<label />");
         var $inputDesc = $("<input class='form-control' id='Campos_" + index + "__Descricao' name='Campos[" + index + "].Descricao' />");
+        var $inputError = $("<span class='field-validation-valid text-danger' data-valmsg-for='Campos_" + index + "__Descricao' data-valmsg-replace='true'></span>");
 
         var $formGroupTipo = $("<div class='form-group' />");
         var $labelTipo = $("<label />");
@@ -64,7 +66,7 @@
         $group.append($title, $inputs);
         $title.append($titleSpan);
         $inputs.append($inputOrdem, $formGroupDesc, $formGroupTipo, $formGroupLista);
-        $formGroupDesc.append($labelDesc, $inputDesc);
+        $formGroupDesc.append($labelDesc, $inputDesc, $inputError);
         $formGroupTipo.append($labelTipo, $selectTipo);
         $formGroupLista.append($labelLista, $inputLista);
         $selectTipo.append($optionCheckbox);
@@ -80,6 +82,10 @@
 
         $inputOrdem.val(campo.Ordem);
         $inputDesc.val(campo.Descricao);
+        $inputDesc.attr("data-val", "true");
+        $inputDesc.attr("data-val-length", "Descrição não deve ultrapassar 60 caracteres");
+        $inputDesc.attr("data-val-length-max", "60");
+        $inputDesc.attr("data-val-required", "Descrição é obrigatório");
         $selectTipo.val(campo.Tipo);
         $inputLista.val(campo.Lista);
         if (campo.Descricao != "")
@@ -112,6 +118,10 @@
 
         $("#accordion").append($group);
         $("#accordion").accordion({ active: "#accordion h3:last-child div" }).accordion("refresh");
+
+        $("form").removeData("validator");
+        $("form").removeData("unobtrusiveValidation");
+        
     }
 
    

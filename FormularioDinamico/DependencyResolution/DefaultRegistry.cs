@@ -36,6 +36,11 @@ namespace FormularioDinamico.DependencyResolution {
             For<IAtualizarCategoria>().Use<AtualizarCategoria>();
             For<IRemoverCategoria>().Use<RemoverCategoria>();
             For<ICategoriaRepository>().Use<CategoriaRepository>();
+
+            For<IInserirSubCategoria>().Use<InserirSubCategoria>();
+            For<IAtualizarSubCategoria>().Use<AtualizarSubCategoria>();
+            For<IRemoverSubCategoria>().Use<RemoverSubCategoria>();
+            For<ISubCategoriaRepository>().Use<SubCategoriaRepository>();
         }
 
         #endregion

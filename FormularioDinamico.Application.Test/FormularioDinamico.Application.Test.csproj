@@ -53,6 +53,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AtualizarSubCategoriaTest.cs" />
+    <Compile Include="InserirSubCategoriaTest.cs" />
+    <Compile Include="RemoverSubCategoriaTest.cs" />
     <Compile Include="RemoverCategoriaTest.cs" />
     <Compile Include="AtualizarCategoriaTest.cs" />
     <Compile Include="InserirCategoriaTest.cs" />

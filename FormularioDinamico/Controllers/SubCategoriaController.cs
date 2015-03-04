@@ -12,6 +12,7 @@ using FormularioDinamico.Models;
 using FormularioDinamico.BindModels;
 using System.Web.Script.Serialization;
 using AutoMapper;
+using FormularioDinamico.Application;
 
 namespace FormularioDinamico.Controllers
 {
@@ -19,6 +20,22 @@ namespace FormularioDinamico.Controllers
     public class SubCategoriaController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private IInserirSubCategoria _inserirSubCategoria;
+        private IAtualizarSubCategoria _atualizarSubCategoria;
+        private IRemoverSubCategoria _removerSubCategoria;
+
+        public SubCategoriaController()
+        {
+
+        }
+
+        public SubCategoriaController(IInserirSubCategoria inserirSubCategoria, IAtualizarSubCategoria atualizarSubCategoria, IRemoverSubCategoria removerSubCategoria)
+        {
+            _inserirSubCategoria = inserirSubCategoria;
+            _atualizarSubCategoria = atualizarSubCategoria;
+            _removerSubCategoria = removerSubCategoria;
+        }
+
 
         // GET: SubCategoria/Details/5
         [AllowAnonymous]
@@ -52,9 +69,15 @@ namespace FormularioDinamico.Controllers
             if (ModelState.IsValid)
             {
                 SubCategoria subCategoria = Mapper.Map<SubCategoria>(subCategoriaBM);
-                db.SubCategorias.Add(subCategoria);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index", "Categoria", null);
+
+                Notification notification = await _inserirSubCategoria.Executar(subCategoria);
+
+                if (notification.HasErrors == false)
+                {
+                    return RedirectToAction("Index", "Categoria", null);
+                }
+
+                ModelState.AddModelError("", String.Join(", ", notification.Errors));
             }
 
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoriaBM.CategoriaId);
@@ -88,11 +111,15 @@ namespace FormularioDinamico.Controllers
             if (ModelState.IsValid)
             {
                 SubCategoria subCategoria = Mapper.Map<SubCategoria>(subCategoriaBM);
-                var oldEntity = db.SubCategorias.Single(s => s.Id == subCategoria.Id);
-                db.Entry(oldEntity).State = EntityState.Deleted;
-                db.Entry(subCategoria).State = EntityState.Added;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index", "Categoria", null);
+
+                Notification notification = await _atualizarSubCategoria.Executar(subCategoria);
+
+                if (notification.HasErrors == false)
+                {
+                    return RedirectToAction("Index", "Categoria", null);
+                }
+
+                ModelState.AddModelError("", String.Join(", ", notification.Errors));
             }
             ViewBag.CategoriaId = new SelectList(db.Categorias, "Id", "Descricao", subCategoriaBM.CategoriaId);
             return View(subCategoriaBM);
@@ -119,9 +146,22 @@ namespace FormularioDinamico.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             SubCategoria subCategoria = await db.SubCategorias.FindAsync(id);
-            db.SubCategorias.Remove(subCategoria);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index", "Categoria", null);
+            if (subCategoria == null)
+            {
+                return HttpNotFound();
+            }
+
+            Notification notification = await _removerSubCategoria.Executar(id);
+            if (notification.HasErrors == false)
+            {
+                return RedirectToAction("Index", "Categoria", null);
+            }
+            else
+            {
+                ViewBag.ErrorMessage = String.Join(", ", notification.Errors);
+                var subCategoriaBM = Mapper.Map<SubCategoriaBM>(subCategoria);
+                return View(subCategoriaBM);
+            }
         }
 
         protected override void Dispose(bool disposing)

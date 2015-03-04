@@ -1,7 +1,8 @@
 ﻿
 namespace FormularioDinamico.Domain.Repositories
 {
-    public interface ISubCategoriaRepository
+    public interface ISubCategoriaRepository : IRepository<SubCategoria>
     {
+        SubCategoria GetSingle(int subCategoriaId);
     }
 }
