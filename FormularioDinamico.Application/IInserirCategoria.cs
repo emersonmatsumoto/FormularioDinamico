@@ -5,6 +5,6 @@ namespace FormularioDinamico.Application
 {
     public interface IInserirCategoria
     {
-        Task Executar(Categoria entity);
+        Task<Notification> Executar(Categoria entity);
     }
 }

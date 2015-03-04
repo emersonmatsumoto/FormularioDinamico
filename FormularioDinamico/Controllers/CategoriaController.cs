@@ -11,6 +11,7 @@ using FormularioDinamico.Domain;
 using FormularioDinamico.Models;
 using FormularioDinamico.BindModels;
 using AutoMapper;
+using FormularioDinamico.Application;
 
 namespace FormularioDinamico.Controllers
 {
@@ -18,6 +19,13 @@ namespace FormularioDinamico.Controllers
     public class CategoriaController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private IInserirCategoria _inserirCategoria;
+
+
+        public CategoriaController(IInserirCategoria inserirCategoria)
+        {
+            _inserirCategoria = inserirCategoria;
+        }
 
         // GET: Categoria
         public async Task<ActionResult> Index()
@@ -28,8 +36,7 @@ namespace FormularioDinamico.Controllers
         // GET: Categoria/Details/5
         [AllowAnonymous]
         public async Task<ActionResult> Details(string slug)
-        {
-          
+        {          
             Categoria categoria = await db.Categorias.FirstOrDefaultAsync(f => f.Slug == slug);
             if (categoria == null)
             {
@@ -54,8 +61,9 @@ namespace FormularioDinamico.Controllers
             if (ModelState.IsValid)
             {
                 var categoria = Mapper.Map<Categoria>(categoriaBM);
-                db.Categorias.Add(categoria);
-                await db.SaveChangesAsync();
+
+                await _inserirCategoria.Executar(categoria);
+
                 return RedirectToAction("Index");
             }
 
