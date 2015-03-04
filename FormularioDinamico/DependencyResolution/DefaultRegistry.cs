@@ -33,6 +33,8 @@ namespace FormularioDinamico.DependencyResolution {
 					scan.With(new ControllerConvention());
                 });
             For<IInserirCategoria>().Use<InserirCategoria>();
+            For<IAtualizarCategoria>().Use<AtualizarCategoria>();
+            For<IRemoverCategoria>().Use<RemoverCategoria>();
             For<ICategoriaRepository>().Use<CategoriaRepository>();
         }
 

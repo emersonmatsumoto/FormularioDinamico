@@ -11,15 +11,15 @@ using System.Linq;
 namespace FormularioDinamico.Application.Test
 {
     [TestClass]
-    public class InserirCategoriaTest
+    public class AtualizarCategoriaTest
     {
         [TestMethod]
-        public async Task InserindoCategoria()
+        public async Task AtualizandoCategoria()
         {
             var entity = new Categoria();
             var repository = new Mock<ICategoriaRepository>();
             repository
-                .Setup(s => s.Add(It.IsAny<Categoria>()))
+                .Setup(s => s.Edit(It.IsAny<Categoria>()))
                 .Verifiable();
             
             repository
@@ -27,23 +27,23 @@ namespace FormularioDinamico.Application.Test
                 .Returns(Task.Delay(1))
                 .Verifiable();
 
-            InserirCategoria testClass = new InserirCategoria(repository.Object);
+            AtualizarCategoria testClass = new AtualizarCategoria(repository.Object);
                         
             Notification note = await testClass.Executar(entity);
 
-            repository.Verify(v => v.Add(entity));
+            repository.Verify(v => v.Edit(entity));
             repository.Verify(v => v.SaveAsync());
 
             Assert.AreEqual(false, note.HasErrors);
         }
 
         [TestMethod]
-        public async Task InserindoCategoriaComSlugDuplicado()
+        public async Task AtualizandoCategoriaComSlugDuplicado()
         {
             var entity = new Categoria();
             var repository = new Mock<ICategoriaRepository>();
             repository
-                .Setup(s => s.Add(It.IsAny<Categoria>()))
+                .Setup(s => s.Edit(It.IsAny<Categoria>()))
                 .Verifiable();
 
             repository
@@ -55,7 +55,7 @@ namespace FormularioDinamico.Application.Test
                 .Setup(s => s.FindBy(It.IsAny<Expression<Func<Categoria, bool>>>()))
                 .Returns(new List<Categoria>{ new Categoria() }.AsQueryable());
 
-            InserirCategoria testClass = new InserirCategoria(repository.Object);
+            AtualizarCategoria testClass = new AtualizarCategoria(repository.Object);
 
             Notification note = await testClass.Executar(entity);
 

@@ -20,15 +20,19 @@ namespace FormularioDinamico.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private IInserirCategoria _inserirCategoria;
+        private IAtualizarCategoria _atualizarCategoria;
+        private IRemoverCategoria _removerCategoria;
 
         public CategoriaController()
         {
 
         }
 
-        public CategoriaController(IInserirCategoria inserirCategoria)
+        public CategoriaController(IInserirCategoria inserirCategoria, IAtualizarCategoria atualizarCategoria, IRemoverCategoria removerCategoria)
         {
             _inserirCategoria = inserirCategoria;
+            _atualizarCategoria = atualizarCategoria;
+            _removerCategoria = removerCategoria;
         }
 
         // GET: Categoria
@@ -106,9 +110,15 @@ namespace FormularioDinamico.Controllers
             if (ModelState.IsValid)
             {
                 var categoria = Mapper.Map<Categoria>(categoriaBM);
-                db.Entry(categoria).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+
+                Notification notification = await _atualizarCategoria.Executar(categoria);
+
+                if (notification.HasErrors == false)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError("", String.Join(", ", notification.Errors));
             }
             return View(categoriaBM);
         }
@@ -135,9 +145,22 @@ namespace FormularioDinamico.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Categoria categoria = await db.Categorias.FindAsync(id);
-            db.Categorias.Remove(categoria);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            if (categoria == null)
+            {
+                return HttpNotFound();
+            }
+
+            Notification notification = await _removerCategoria.Executar(id);
+            if (notification.HasErrors == false)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.ErrorMessage = String.Join(", ", notification.Errors);
+                var categoriaBM = Mapper.Map<CategoriaBM>(categoria);
+                return View(categoriaBM);
+            }
         }
 
         protected override void Dispose(bool disposing)

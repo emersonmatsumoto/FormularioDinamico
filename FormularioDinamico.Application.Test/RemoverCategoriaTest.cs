@@ -11,15 +11,15 @@ using System.Linq;
 namespace FormularioDinamico.Application.Test
 {
     [TestClass]
-    public class InserirCategoriaTest
+    public class RemoverCategoriaTest
     {
         [TestMethod]
-        public async Task InserindoCategoria()
+        public async Task RemovendoCategoria()
         {
-            var entity = new Categoria();
+            var entity = new Categoria() { SubCategorias = new List<SubCategoria>() };
             var repository = new Mock<ICategoriaRepository>();
             repository
-                .Setup(s => s.Add(It.IsAny<Categoria>()))
+                .Setup(s => s.Delete(It.IsAny<Categoria>()))
                 .Verifiable();
             
             repository
@@ -27,23 +27,27 @@ namespace FormularioDinamico.Application.Test
                 .Returns(Task.Delay(1))
                 .Verifiable();
 
-            InserirCategoria testClass = new InserirCategoria(repository.Object);
-                        
-            Notification note = await testClass.Executar(entity);
+            repository
+                .Setup(s => s.GetSingle(It.IsAny<int>()))
+                .Returns(entity);
 
-            repository.Verify(v => v.Add(entity));
+            RemoverCategoria testClass = new RemoverCategoria(repository.Object);
+                        
+            Notification note = await testClass.Executar(1);
+
+            repository.Verify(v => v.Delete(entity));
             repository.Verify(v => v.SaveAsync());
 
             Assert.AreEqual(false, note.HasErrors);
         }
 
         [TestMethod]
-        public async Task InserindoCategoriaComSlugDuplicado()
+        public async Task RemovendoCategoriaComSubCategorias()
         {
-            var entity = new Categoria();
+            var entity = new Categoria() { SubCategorias = new List<SubCategoria> { new SubCategoria() } };
             var repository = new Mock<ICategoriaRepository>();
             repository
-                .Setup(s => s.Add(It.IsAny<Categoria>()))
+                .Setup(s => s.Delete(It.IsAny<Categoria>()))
                 .Verifiable();
 
             repository
@@ -52,15 +56,15 @@ namespace FormularioDinamico.Application.Test
                 .Verifiable();
 
             repository
-                .Setup(s => s.FindBy(It.IsAny<Expression<Func<Categoria, bool>>>()))
-                .Returns(new List<Categoria>{ new Categoria() }.AsQueryable());
+                .Setup(s => s.GetSingle(It.IsAny<int>()))
+                .Returns(entity);
 
-            InserirCategoria testClass = new InserirCategoria(repository.Object);
+            RemoverCategoria testClass = new RemoverCategoria(repository.Object);
 
-            Notification note = await testClass.Executar(entity);
+            Notification note = await testClass.Executar(1);
 
             Assert.AreEqual(true, note.HasErrors);
-            Assert.AreEqual("Já existe outra categoria com o mesmo slug", note.Errors.FirstOrDefault());
+            Assert.AreEqual("É necessário remover todas sub-categorias desta categoria", note.Errors.FirstOrDefault());
         }
     }
 }

@@ -53,6 +53,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="RemoverCategoriaTest.cs" />
+    <Compile Include="AtualizarCategoriaTest.cs" />
     <Compile Include="InserirCategoriaTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

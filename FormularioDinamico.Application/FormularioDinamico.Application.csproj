@@ -30,7 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IAtualizarCategoria.cs" />
+    <Compile Include="IRemoverCategoria.cs" />
     <Compile Include="IInserirCategoria.cs" />
+    <Compile Include="AtualizarCategoria.cs" />
+    <Compile Include="RemoverCategoria.cs" />
     <Compile Include="InserirCategoria.cs" />
     <Compile Include="Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
