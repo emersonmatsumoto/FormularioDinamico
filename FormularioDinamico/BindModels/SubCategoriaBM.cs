@@ -16,6 +16,7 @@ namespace FormularioDinamico.BindModels
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
 
+        [RegularExpression("^[a-z0-9-]+$", ErrorMessage = "Slug deve conter somente letras e números separados por '-'")]
         [StringLength(60, ErrorMessage = "Slug não deve ultrapassar {0} caracteres")]
         [Required(ErrorMessage = "Slug é obrigatória")]
         [Display(Name = "Slug")]
